@@ -1,17 +1,15 @@
 import Layout from "../../hocs/layouts/Layout"
 import Navbar from "../../componentes/Navigation/Navbar_logged"
 import Footer from "../../componentes/Navigation/Footer"
-import SideMenu from "../../componentes/Vender/Sidemenu"
-import Tarjetas from "../../componentes/Vender/Tarjetas"
-import ComprarJ from "../../componentes/ComprarJ"
+import CrearOrdenCompraJ from "../../componentes/CrearOrdenCompraJ"
 
-function Vender(){
+function CrearOrdenCompra(){
     return(
         <Layout>
             <Navbar/>
-                <ComprarJ></ComprarJ>
+            <CrearOrdenCompraJ></CrearOrdenCompraJ>
                 <Footer/>
         </Layout>
     )
 }
-export default Vender
+export default CrearOrdenCompra

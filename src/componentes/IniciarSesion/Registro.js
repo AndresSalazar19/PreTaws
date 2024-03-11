@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function Registrar() {
+  const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -9,12 +10,23 @@ function Registrar() {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:3001/registro', { email, password });
+      await axios.post('http://localhost:3001/registro', { nombre, email, password });
       alert('Registro exitoso');
+      window.location = "http://localhost:3000/IniciarSesion"; 
     } catch (error) {
       console.error('Error al registrar:', error);
-      alert('Error al registrar. Por favor, inténtalo de nuevo más tarde');
+      if (error.response) {
+        // Si hay una respuesta del servidor, muestra el mensaje de error del servidor
+        alert('Error al registrar: ' + error.response.data.error);
+      } else if (error.request) {
+        // Si no hay respuesta del servidor, muestra el mensaje de error de la solicitud
+        alert('Error al registrar: No se pudo realizar la solicitud al servidor');
+      } else {
+        // Si hay algún otro tipo de error, muestra un mensaje genérico
+        alert('Error al registrar: Por favor, inténtalo de nuevo más tarde');
+      }
     }
+    
   };
 
   return (
@@ -36,6 +48,19 @@ function Registrar() {
 
               <form onSubmit={handleSubmit}>
                 <div className="mt-6 space-y-2">
+                  <div>
+                    <label htmlFor="nombre" className="sr-only">Nombre</label>
+                    <input
+                      type="text"
+                      name="nombre"
+                      id="nombre"
+                      value={nombre}
+                      onChange={(e) => setNombre(e.target.value)}
+                      className="block w-full px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                      placeholder="Ingresa tu nombre y apellido"
+                      required
+                    />
+                  </div>
                   <div>
                     <label htmlFor="email" className="sr-only">Email</label>
                     <input
